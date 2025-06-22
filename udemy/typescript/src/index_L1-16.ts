@@ -159,13 +159,13 @@ class Bird extends Animal {
 // Lesson 11: Gemnerics
 
 // A FIFO (First In, First Out) queue implementation
-class Queue {
+class Queue2 {
     data = [];
     push(item) { this.data.push(item); };
     pop(): any { return this.data.shift(); };
 }
 
-class NumberQueue extends Queue {
+class NumberQueue extends Queue2 {
     push(item: number) { super.push(item); }
     pop(): number { return super.pop(); }
 }
@@ -193,3 +193,26 @@ let stringValue: string = anyValue; // Valid: any can be assigned to string
 if (typeof unknownValue === "string") {
     let stringValue2: string = unknownValue; // Valid: after type checking, unknown can be assigned to string
 }
+
+
+//-------------------------------
+// Lesson 13: Type Assertions
+function load(): any { return '';};
+
+let hello = load();
+
+const trimmedHello = (hello as string).trim();
+
+
+//-------------------------------
+// Lesson 14: Type Casting
+let leet;
+
+leet = "1337";
+
+const number = leet as number; // Type assertion
+
+console.log(number === 1337); // false, because leet is still a string
+
+const number2 = +leet; // Type casting
+console.log(number2 === 1337); // true, because leet is now cast to a number
