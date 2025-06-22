@@ -160,8 +160,8 @@ class Bird extends Animal {
 
 // A FIFO (First In, First Out) queue implementation
 class Queue2 {
-    data = [];
-    push(item) { this.data.push(item); };
+    data: any = [];
+    push(item: any) { this.data.push(item); };
     pop(): any { return this.data.shift(); };
 }
 
@@ -210,9 +210,8 @@ let leet;
 
 leet = "1337";
 
-const number = leet as number; // Type assertion
-
-console.log(number === 1337); // false, because leet is still a string
+// const number = leet as number; // Type assertion
+// console.log(number === 1337); // false, because leet is still a string
 
 const number2 = +leet; // Type casting
 console.log(number2 === 1337); // true, because leet is now cast to a number
