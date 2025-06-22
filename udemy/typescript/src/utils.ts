@@ -5,7 +5,3 @@ export function isPalindrome(str: string): boolean {
     return cleanedStr === cleanedStr.split('').reverse().join('');
 }
 
-
-
-console.log(isPalindrome("madam")); // true
-console.log(isPalindrome("madan")); // false
