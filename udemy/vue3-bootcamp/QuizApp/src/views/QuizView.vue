@@ -14,8 +14,6 @@
     let numberOfCorrectAnswers = ref(0);
     let quizCompleted = ref(false);
 
-    let currentQuestion = quiz ? quiz.questions[currentQuestionIndex.value] : null;
-
     const onOptionSelected = (isCorrect) => {
         if (isCorrect) {
             numberOfCorrectAnswers.value++;
@@ -23,9 +21,7 @@
 
         currentQuestionIndex.value++;
 
-        if (currentQuestionIndex.value < quiz.questions.length) {
-            currentQuestion = quiz.questions[currentQuestionIndex.value];
-        } else {
+        if (currentQuestionIndex.value >= quiz.questions.length) {
             quizCompleted.value = true;
         }
     }
@@ -36,14 +32,12 @@
         <div v-if="quiz">
             <QuizHeader :currentQuestionIndex="currentQuestionIndex" :quizName="quiz.name" :questionsCount="quiz.questions.length"/>
 
-            <div v-if="!quizCompleted">
-                <Question
-                    :question="quiz.questions[currentQuestionIndex]"
-                    @optionSelected="onOptionSelected"/>
-            </div>
-            <div v-else class="completed">
-                <QuizResult :numberOfCorrectAnswers="numberOfCorrectAnswers" :questionsCount="quiz.questions.length"/>
-            </div>
+            <Question v-if="!quizCompleted"
+                :question="quiz.questions[currentQuestionIndex]"
+                @optionSelected="onOptionSelected"/>
+            <QuizResult v-else
+                :numberOfCorrectAnswers="numberOfCorrectAnswers"
+                :questionsCount="quiz.questions.length"/>
         </div>
         <div v-else>
             <p>Quiz not found.</p>
