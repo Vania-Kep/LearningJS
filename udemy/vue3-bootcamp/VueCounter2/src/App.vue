@@ -1,47 +1,55 @@
+<!-- SCRIPT via Composition API -->
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  // This is a simple Vue 3 component for a counter application
+  import { ref } from 'vue';
+
+  const count = ref(0); // Reactive variable to hold the count value
+  const increment = () => {
+    count.value++;
+  };
+  const decrement = () => {
+    count.value--;
+  };
+  const reset = () => {
+    count.value = 0;
+  };
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <h4>The current count is...</h4>
+    <h1>{{ count }}</h1>
+    <button @click="decrement">-</button>
+    <button @click="increment">+</button>
+    <br />
+    <button @click="reset">Reset</button>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+main {
+  text-align: center;
+  margin-top: 50px;
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+h4 {
+  font-size: 1.5rem;
+  color: #ffc;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+h1 {
+  font-size: 3rem;
+  color: #7f7f7f;
+}
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+button:hover {
+  background-color: #0056b3;
 }
 </style>
