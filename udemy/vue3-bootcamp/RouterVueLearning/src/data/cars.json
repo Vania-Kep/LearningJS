@@ -1,0 +1,166 @@
+[
+    {
+        "id": 1,
+        "name": "Toyota Corolla",
+        "price": 18000,
+        "year": 2018,
+        "img": "https://example.com/images/toyota-corolla.jpg",
+        "contact": {
+            "dealer": "AutoWorld",
+            "number": "555-1234"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Honda Civic",
+        "price": 19500,
+        "year": 2019,
+        "img": "https://example.com/images/honda-civic.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Ford Mustang",
+        "price": 27000,
+        "year": 2020,
+        "img": "https://example.com/images/ford-mustang.jpg",
+        "contact": {
+            "dealer": "SpeedMotors",
+            "number": "555-5678"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Chevrolet Camaro",
+        "price": 26000,
+        "year": 2017,
+        "img": "https://example.com/images/chevrolet-camaro.jpg"
+    },
+    {
+        "id": 5,
+        "name": "BMW 3 Series",
+        "price": 32000,
+        "year": 2021,
+        "img": "https://example.com/images/bmw-3series.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Audi A4",
+        "price": 34000,
+        "year": 2022,
+        "img": "https://example.com/images/audi-a4.jpg",
+        "contact": {
+            "dealer": "LuxuryCars",
+            "number": "555-8765"
+        }
+    },
+    {
+        "id": 7,
+        "name": "Mercedes-Benz C-Class",
+        "price": 35000,
+        "year": 2021,
+        "img": "https://example.com/images/mercedes-cclass.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Volkswagen Golf",
+        "price": 21000,
+        "year": 2018,
+        "img": "https://example.com/images/vw-golf.jpg"
+    },
+    {
+        "id": 9,
+        "name": "Hyundai Elantra",
+        "price": 17000,
+        "year": 2019,
+        "img": "https://example.com/images/hyundai-elantra.jpg"
+    },
+    {
+        "id": 10,
+        "name": "Kia Optima",
+        "price": 19000,
+        "year": 2020,
+        "img": "https://example.com/images/kia-optima.jpg",
+        "contact": {
+            "dealer": "CityDealers",
+            "number": "555-4321"
+        }
+    },
+    {
+        "id": 11,
+        "name": "Mazda 6",
+        "price": 22000,
+        "year": 2017,
+        "img": "https://example.com/images/mazda6.jpg"
+    },
+    {
+        "id": 12,
+        "name": "Subaru Impreza",
+        "price": 20000,
+        "year": 2018,
+        "img": "https://example.com/images/subaru-impreza.jpg"
+    },
+    {
+        "id": 13,
+        "name": "Nissan Altima",
+        "price": 21000,
+        "year": 2019,
+        "img": "https://example.com/images/nissan-altima.jpg"
+    },
+    {
+        "id": 14,
+        "name": "Tesla Model 3",
+        "price": 39000,
+        "year": 2022,
+        "img": "https://example.com/images/tesla-model3.jpg"
+    },
+    {
+        "id": 15,
+        "name": "Volvo S60",
+        "price": 33000,
+        "year": 2021,
+        "img": "https://example.com/images/volvo-s60.jpg",
+        "contact": {
+            "dealer": "NordicAuto",
+            "number": "555-2468"
+        }
+    },
+    {
+        "id": 16,
+        "name": "Jaguar XE",
+        "price": 37000,
+        "year": 2020,
+        "img": "https://example.com/images/jaguar-xe.jpg"
+    },
+    {
+        "id": 17,
+        "name": "Lexus IS",
+        "price": 36000,
+        "year": 2021,
+        "img": "https://example.com/images/lexus-is.jpg"
+    },
+    {
+        "id": 18,
+        "name": "Acura TLX",
+        "price": 34000,
+        "year": 2022,
+        "img": "https://example.com/images/acura-tlx.jpg"
+    },
+    {
+        "id": 19,
+        "name": "Infiniti Q50",
+        "price": 35000,
+        "year": 2020,
+        "img": "https://example.com/images/infiniti-q50.jpg",
+        "contact": {
+            "dealer": "PremiumMotors",
+            "number": "555-1357"
+        }
+    },
+    {
+        "id": 20,
+        "name": "Genesis G70",
+        "price": 38000,
+        "year": 2022,
+        "img": "https://example.com/images/genesis-g70.jpg"
+    }
+]
