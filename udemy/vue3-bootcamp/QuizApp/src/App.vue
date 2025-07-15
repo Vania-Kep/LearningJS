@@ -1,6 +1,7 @@
 <script setup>
   import q from './data/quizes.json';
   import { ref, watch } from 'vue';
+  import Card from './components/Card.vue';
 
   const quizes = ref(q);
   const search = ref('');
@@ -22,17 +23,7 @@
       <input type="text" placeholder="Search quizes..." v-model.trim="search"/>
     </header>
     <div class="options-container">
-      <div
-        v-for="quiz in quizes"
-        :key="quiz.id"
-        class="card"
-      >
-        <img :src="quiz.img" :alt="quiz.name">
-        <div class="card-text">
-          <h2>{{ quiz.name }}</h2>
-          <p>{{quiz.questions.length}} Questions</p>
-        </div>
-      </div>
+      <Card v-for="quiz in quizes" :key="quiz.id" :quiz="quiz"/>
     </div>
   </div>
 </template>
@@ -68,36 +59,6 @@
     flex-wrap: wrap;
     margin-top: 40px;
     /* justify-content: space-between; */
-  }
-
-  /* Card styles */
-  .card {
-    width: 250px;
-    overflow: hidden;
-    border-radius: 2%;
-    box-shadow: 1px 1px 5px rgba(183, 111, 1, 0.974);
-    margin-right: 20px;
-    margin-bottom: 35px;
-    cursor: pointer;
-
-    img {
-      width: 100%;
-      height: 190px;
-      margin: 0;
-    }
-
-    .card-text {
-      padding: 0 5px;
-
-      h2 {
-        font-weight: bold;
-      }
-
-      p {
-        color: #666;
-        margin-top: 5px;
-      }
-    }
   }
 
 </style>
