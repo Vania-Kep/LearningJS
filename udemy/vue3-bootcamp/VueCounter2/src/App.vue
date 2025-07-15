@@ -1,5 +1,5 @@
 <!-- SCRIPT via Composition API -->
-<script setup>
+<!-- <script setup>
   // This is a simple Vue 3 component for a counter application
   import { ref } from 'vue';
 
@@ -12,6 +12,29 @@
   };
   const reset = () => {
     count.value = 0;
+  };
+</script> -->
+
+<!-- SCRIPT via Options API  -->
+<script>
+ // The same functionality using the Options API
+  export default {
+    data() {
+        return {
+            count: 0
+        };
+    },
+    methods: {
+        increment() {
+            this.count++;
+        },
+        decrement() {
+            this.count--;
+        },
+        reset() {
+            this.count = 0;
+        }
+    }
   };
 </script>
 
