@@ -17,7 +17,7 @@
 
 
 <template>
-  <div class="container">
+  <div>
     <header>
       <h1>Quizes</h1>
       <input type="text" placeholder="Search quizes..." v-model.trim="search"/>
@@ -29,13 +29,6 @@
 </template>
 
 <style scoped>
-  .container {
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
   header {
     margin: 30px 0 10px 0;
     display: flex;

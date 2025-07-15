@@ -1,20 +1,24 @@
 <script setup>
-    import { RouterLink } from 'vue-router';
+    import { useRouter } from 'vue-router';
     import { defineProps } from 'vue';
 
     const props = defineProps(['quiz']);
+
+    const router = useRouter();
+
+    const navigateToQuiz = () => {
+      router.push(`quiz/${props.quiz.id}`);
+    };
 </script>
 
 <template>
-  <RouterLink :to="`quiz/${quiz.id}`">
-      <div class="card">
-          <img :src="quiz.img" :alt="quiz.name">
-          <div class="card-text">
-            <h2>{{ quiz.name }}</h2>
-            <p>{{quiz.questions.length}} Questions</p>
-          </div>
-      </div>
-  </RouterLink>
+  <div class="card" @click="navigateToQuiz">
+    <img :src="quiz.img" :alt="quiz.name">
+    <div class="card-text">
+      <h2>{{ quiz.name }}</h2>
+      <p>{{quiz.questions.length}} Questions</p>
+    </div>
+  </div>
 </template>
 <style scoped>
   /* Card styles */
