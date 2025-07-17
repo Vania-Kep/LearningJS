@@ -23,7 +23,10 @@
       <input type="text" placeholder="Search quizes..." v-model.trim="search"/>
     </header>
     <div class="options-container">
-      <Card v-for="quiz in quizes" :key="quiz.id" :quiz="quiz"/>
+      <TransitionGroup name="card" appear>
+        <Card v-for="quiz in quizes" :key="quiz.id" :quiz="quiz" />
+      </TransitionGroup>
+
     </div>
   </div>
 </template>
@@ -54,4 +57,16 @@
     /* justify-content: space-between; */
   }
 
+  /* Card Transitions */
+  .card-enter-from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  .card-enter-to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .card-enter-active {
+    transition: all 0.5s ease;
+  }
 </style>
