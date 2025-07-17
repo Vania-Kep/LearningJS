@@ -31,6 +31,7 @@
   }
   .rote-enter-active {
     transition: all 1s ease;
+    pointer-events: none;
   }
 
   .rote-leave-to {
@@ -39,5 +40,6 @@
   }
   .rote-leave-active {
     transition: all 0.3s ease;
+    pointer-events: none;
   }
 </style>

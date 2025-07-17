@@ -96,6 +96,5 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-    /* justify-content: space-between; */
   }
 </style>
