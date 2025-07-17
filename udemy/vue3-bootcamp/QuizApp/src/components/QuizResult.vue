@@ -14,6 +14,7 @@
 </script>
 
 <template>
+    <Transition name="results" appear>
     <div class="completed">
         <h4>Your results...</h4>
         <div class="result">{{ numberOfCorrectAnswers }}/{{ questionsCount }}</div>
@@ -23,12 +24,14 @@
                 {{ correctAnswersRate }}% correct
             </p>
         </div>
-        <RouterLink :to="'/'">Go Back</RouterLink>
+        <RouterLink class="back-link" :to="'/'">Go Back</RouterLink>
     </div>
+    </Transition>
 </template>
 
 <style scoped>
     .completed {
+        animation: bounceIn 1s ease 0.6s both;
         display: grid;
         font-size: 20px;
         text-align: center;
@@ -67,8 +70,23 @@
             }
         }
 
-        a {
+        .back-link {
             font-size: 15px;
         }
     }
+
+.results-enter-from {
+    opacity: 0;
+    transform: scale(0.5) rotateY(90deg);
+}
+
+.results-enter-to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+}
+
+.results-enter-active {
+    transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 </style>

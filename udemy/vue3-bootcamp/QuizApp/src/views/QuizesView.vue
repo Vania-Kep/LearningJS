@@ -2,6 +2,7 @@
   import q from '../data/quizes.json';
   import { ref, watch } from 'vue';
   import Card from '../components/Card.vue';
+  import gsap from 'gsap';
 
   const quizes = ref(q);
   const search = ref('');
@@ -13,6 +14,41 @@
       quizes.value = q;
     }
   });
+
+  const cardBeforeEnter = (el) => {
+    // card-enter-from
+    el.style.opacity = 0;
+    el.style.transform = 'translatey(-70px)';
+  };
+
+  const cardEnter = (el, done) => {
+    // card-enter-to
+    gsap.to(el, {
+      rotation: 0,
+      duration: 2,
+      ease: "elastic",
+      opacity: 1,
+      transform: 'translatey(0)',
+      onComplete: done
+    });
+  };
+
+  const cardBeforeLeave = (el) => {
+    // card-leave-from
+    el.style.opacity = 1;
+    el.style.transform = 'translatey(0)';
+
+  };
+
+  const cardLeave = (el, done) => {
+    // card-leave-to
+    gsap.to(el, {
+      y: 60,
+      opacity: 0,
+      duration: 0.5,
+      onComplete: done
+    });
+  };
 </script>
 
 
@@ -23,8 +59,14 @@
       <input type="text" placeholder="Search quizes..." v-model.trim="search"/>
     </header>
     <div class="options-container">
-      <TransitionGroup name="card" appear>
-        <Card v-for="quiz in quizes" :key="quiz.id" :quiz="quiz" />
+      <TransitionGroup
+        appear
+        @before-enter="cardBeforeEnter"
+        @enter="cardEnter"
+        @before-leave="cardBeforeLeave"
+        @leave="cardLeave"
+      >
+        <Card v-for="(quiz, index) in quizes" :key="quiz.id" :quiz="quiz" :data-index="index"/>
       </TransitionGroup>
 
     </div>
@@ -55,18 +97,5 @@
     flex-wrap: wrap;
     margin-top: 40px;
     /* justify-content: space-between; */
-  }
-
-  /* Card Transitions */
-  .card-enter-from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  .card-enter-to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .card-enter-active {
-    transition: all 0.5s ease;
   }
 </style>
