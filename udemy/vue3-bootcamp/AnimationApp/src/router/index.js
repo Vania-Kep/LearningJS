@@ -6,8 +6,23 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: HomeView,
+    },
+    {
+      path: '/color',
+      name: 'Color',
+      component: () => import('../views/ColorView.vue'),
+    },
+    {
+      path: '/fade',
+      name: 'Fade',
+      component: () => import('../views/FadeView.vue'),
+    },
+    {
+      path: '/invitationList',
+      name: 'Invitation List',
+      component: () => import('../views/InvitationListView.vue'),
     },
     {
       path: '/about',

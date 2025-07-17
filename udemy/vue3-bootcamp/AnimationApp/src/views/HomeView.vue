@@ -1,42 +1,23 @@
 <script setup>
-  import { ref, Transition } from 'vue';
+    import router from '@/router';
+    import { RouterLink } from 'vue-router';
 
-  const showText = ref (false);
+    const appNames = ['Color', 'Fade', 'Invitation List']
+
+    const apps = router.options.routes.filter(r => appNames.includes(r.name));
+
 </script>
 
 <template>
-  <main>
-    <Transition name="fade">
-      <h1 v-if="showText">Hello World</h1>
-    </Transition>
-
-    <button @click="showText=!showText">Toggle</button>
-  </main>
+  <div class="home">
+    <h3>My Animation apps that I implemented in scope of this lesson</h3>
+    <ul>
+      <li v-for="rote in apps" :key="rote.name">
+        <RouterLink  :to="rote.path" tag="li">{{ rote.name }}</RouterLink>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped>
-  .fade-enter-from {
-    opacity: 0;
-  }
-
-  .fade-enter-to {
-    opacity: 1;
-  }
-
-  .fade-enter-active {
-    transition: all 1s ease;
-  }
-
-  
-  .fade-leave-from {
-    opacity: 1;
-  }
-
-  .fade-leave-to {
-    opacity: 0;
-  }
-
-  .fade-leave-active {
-    transition: all 1s ease-in-out;
-  }
 </style>
