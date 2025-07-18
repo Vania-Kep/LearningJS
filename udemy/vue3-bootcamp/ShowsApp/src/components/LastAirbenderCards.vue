@@ -11,8 +11,6 @@
   const response = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`);
   characters.value = response.data;
 
-  console.log(response);
-
   watch(page, async () => {
     const res = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`);
     characters.value = res.data;
@@ -22,7 +20,6 @@
 
 <template>
   <div class="container">
-
     <div class="button-container">
       <button @click="page > 1 ? page-- : null" :class="page > 1 ? '' : 'disabled'">&lt</button>
       <div class="page">{{ page }}</div>
@@ -32,12 +29,12 @@
       <transition-group name="card" appear>
         <Card
           v-for="character in characters"
-          :key="character.id"
+          :key="character._id"
           :name="character.name || ''"
+          :cardId="character._id"
           :image="character.photoUrl || ''"
           :affiliation="character.affiliation || ''"
           :allies="character.allies"
-          :onClick="flipCard"
         />
       </transition-group>
     </div>
@@ -106,6 +103,6 @@
   opacity: 1;
 }
 .card-enter-active {
-  transition: all 0.5s ease;
+  transition: all 0.8s ease;
 }
 </style>
