@@ -1,6 +1,6 @@
 <script setup>
     import { inject } from 'vue';
-    import useSymbols from '@/assets/composables/useSymbols';
+    import useSymbols from '@/composables/useSymbols';
 
     const numbers = inject('numbers');
 

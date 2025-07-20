@@ -1,7 +1,7 @@
 <script setup>
     import GrandChild from './GrandChild.vue';
     import { inject } from 'vue';
-    import useSymbols from '@/assets/composables/useSymbols';
+    import useSymbols from '@/composables/useSymbols';
 
     const numbers = inject('numbers');
 
