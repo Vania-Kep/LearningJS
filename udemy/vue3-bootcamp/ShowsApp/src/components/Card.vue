@@ -6,7 +6,7 @@
 
 
   const flipped = ref(false);
-  const {cardId, image, name, affiliation, allies} = defineProps(['cardId', 'image', 'name', 'affiliation', 'allies' ]);
+  const {cardId, image, name, isFlippable} = defineProps(['cardId', 'image', 'name', 'isFlippable']);
   const cardDetails = ref(null);
 
 
@@ -27,20 +27,14 @@
 </script>
 
 <template>
-  <div @click="flipped=!flipped" >
+  <div @click="flipped=isFlippable ? !flipped : false" >
     <div style="width:320px; height: 420px; overflow: hidden;">
     <transition name="flip">
       <n-card v-if="!flipped" :title="name" >
         <template #cover>
           <img :src="image" onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'">
         </template>
-        <h3>{{ affiliation }}</h3>
-        <div class="jobs">
-          <p v-for="(ally, index) in allies" :key="ally">
-            {{ ally }}
-            <span v-if="index < allies.length-1">,&nbsp;</span>
-          </p>
-        </div>
+        <slot></slot>
       </n-card>
       <div v-else>
         <n-card v-if="cardDetails" :title="name">
@@ -55,14 +49,14 @@
             Allies:
             <span v-for="(ally, index) in cardDetails.allies" :key="ally">
               {{ ally }}
-              <span v-if="index < allies.length-1">,&nbsp;</span>
+              <span v-if="index < cardDetails.allies.length-1">,&nbsp;</span>
             </span>
           </div>
           <div v-if="cardDetails.enemies.length" class="jobs">
             Enemies:
             <span v-for="(enemy, index) in cardDetails.enemies" :key="enemy">
               {{ enemy }}
-              <span v-if="index < allies.length-1">,&nbsp;</span>
+              <span v-if="index < cardDetails.enemies.length-1">,&nbsp;</span>
             </span>
           </div>
         </n-card>
@@ -98,15 +92,6 @@
 .n-card img {
     min-height: 250px;
     height: 250px;
-}
-
-p {
-    font-size: 10px;
-}
-
-.jobs {
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .flip-leave-active {

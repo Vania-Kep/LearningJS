@@ -1,5 +1,6 @@
 <script setup>
   import LastAirbenderCards from './components/LastAirbenderCards.vue';
+  import RickAndMortyCards from './components/RickAndMortyCards.vue';
 </script>
 
 <template>
@@ -16,6 +17,7 @@
         <div>Loading...</div>
       </template>
     </Suspense>
+    <RickAndMortyCards />
   </main>
 </template>
 

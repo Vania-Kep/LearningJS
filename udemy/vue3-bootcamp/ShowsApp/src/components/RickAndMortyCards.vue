@@ -1,21 +1,21 @@
 <script setup>
   import axios from "axios";
-  import { ref, watch } from "vue";
+  import { ref, watch, onMounted } from "vue";
   import Card from "./Card.vue";
 
   const characters = ref([]);
+  const page = ref(1);
 
-  let perPage = ref(8);
-  let page = ref(1);
+  onMounted( async ()=> {
+    const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${page.value}`);
 
-  const response = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`);
-  characters.value = response.data;
-
-  watch(page, async () => {
-    const res = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`);
-    characters.value = res.data;
+    characters.value = response.data.results;
   });
 
+  watch(page, async () => {
+    const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${page.value}`);
+    characters.value = response.data.results;
+  });
 </script>
 
 <template>
@@ -29,19 +29,14 @@
       <transition-group name="card" appear>
         <Card
           v-for="character in characters"
-          :key="character._id"
+          :key="character.id"
           :name="character.name || ''"
-          :cardId="character._id"
-          :image="character.photoUrl || ''"
-          :isFlippable="true"
+          :cardId="character.id"
+          :image="character.image || ''"
+          :isFlippable="false"
         >
+        <p>{{ character.location.name }}</p>
           <h3 v-if="character.affiliation">{{character.affiliation }}</h3>
-          <div class="jobs">
-            <p v-for="(ally, index) in character.allies" :key="ally">
-              {{ ally }}
-              <span v-if="index < character.allies.length-1">,&nbsp;</span>
-            </p>
-          </div>
         </Card>
       </transition-group>
     </div>
@@ -56,10 +51,11 @@
 <style scoped>
 .container {
     background-color: rgb(27, 26, 26);
-    padding: 30px
+    padding: 30px;
+    margin-top: 100px;
 }
 .cards {
-    max-width: 1290px;
+    max-width: 1360px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
