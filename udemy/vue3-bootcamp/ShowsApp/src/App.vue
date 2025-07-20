@@ -16,8 +16,11 @@
   </header>
 
   <main>
-    <LastAirbenderCardsSuspense v-if="isLastAirbender"/>
-    <RickAndMortyCards v-else/>
+    <!-- <LastAirbenderCardsSuspense v-if="isLastAirbender"/>
+    <RickAndMortyCards v-else/> -->
+    <KeepAlive>
+      <Component :is="isLastAirbender ? LastAirbenderCardsSuspense : RickAndMortyCards" />
+    </KeepAlive>
   </main>
 </template>
 

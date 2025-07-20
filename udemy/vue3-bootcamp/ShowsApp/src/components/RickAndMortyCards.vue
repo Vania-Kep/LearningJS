@@ -60,7 +60,6 @@
 .container {
     background-color: rgb(27, 26, 26);
     padding: 30px;
-    margin-top: 100px;
 }
 .cards {
     max-width: 1360px;
