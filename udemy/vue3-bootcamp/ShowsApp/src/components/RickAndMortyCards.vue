@@ -3,7 +3,7 @@
   import { ref, watch, onMounted } from "vue";
   import Card from "./Card.vue";
 
-  const characters = ref([]);
+  const characters = ref(null);
   const page = ref(1);
 
   onMounted( async ()=> {
@@ -19,7 +19,7 @@
 </script>
 
 <template>
-  <div class="container">
+  <div v-if="characters" class="container">
     <div class="button-container">
       <button @click="page > 1 ? page-- : null" :class="page > 1 ? '' : 'disabled'">&lt</button>
       <div class="page">{{ page }}</div>
@@ -46,6 +46,14 @@
       <button @click="page++">&gt</button>
     </div>
   </div>
+    <div v-else>
+      <div class="container-loading spinner">
+        <div>
+          <div>Loading...</div>
+          <n-spin size="large" />
+        </div>
+      </div>
+    </div>
 </template>
 
 <style scoped>
@@ -94,9 +102,13 @@
     }
 }
 .spinner {
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.n-spin-body {
+  width: 100%;
 }
 
 .card-enter-from {
