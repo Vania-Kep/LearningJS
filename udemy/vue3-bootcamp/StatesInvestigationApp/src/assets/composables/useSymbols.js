@@ -1,7 +1,8 @@
 import { ref } from 'vue';
 
+const symbols = ref(['!', '@', '#', '$', '%', '^', '&', '*']);
+
 export default function () {
-    const symbols = ref(['!', '@', '#', '$', '%', '^', '&', '*']);
 
     const addSymbol = (symbol) => {
         symbols.value.push(symbol);
