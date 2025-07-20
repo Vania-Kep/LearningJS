@@ -8,7 +8,11 @@
   let perPage = ref(8);
   let page = ref(1);
 
-  const response = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`);
+  function wait (t) {
+    return new Promise((resolve) => setTimeout(resolve, t));
+  }
+
+  const response = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`).then(await wait(1000));
   characters.value = response.data;
 
   watch(page, async () => {

@@ -6,8 +6,12 @@
   const characters = ref(null);
   const page = ref(1);
 
+  function wait (t) {
+    return new Promise((resolve) => setTimeout(resolve, t));
+  }
+
   onMounted( async ()=> {
-    const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${page.value}`);
+    const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${page.value}`).then(await wait(1000));
 
     characters.value = response.data.results;
   });
