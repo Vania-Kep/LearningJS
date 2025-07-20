@@ -14,8 +14,8 @@
   watch(page, async () => {
     const res = await axios.get(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage.value}&page=${page.value}`);
     characters.value = res.data;
-
   });
+
 </script>
 
 <template>
@@ -52,7 +52,7 @@
     padding: 30px
 }
 .cards {
-    max-width: 1360px;
+    max-width: 1290px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;

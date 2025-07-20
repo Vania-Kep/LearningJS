@@ -2,6 +2,9 @@
   import {ref, watch, defineProps} from 'vue';
   import axios from "axios";
 
+  const FIRST_INVALID_VAL = '\"';
+
+
   const flipped = ref(false);
   const {cardId, image, name, affiliation, allies} = defineProps(['cardId', 'image', 'name', 'affiliation', 'allies' ]);
   const cardDetails = ref(null);
@@ -29,7 +32,7 @@
     <transition name="flip">
       <n-card v-if="!flipped" :title="name" >
         <template #cover>
-          <img :src="image">
+          <img :src="image" onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'">
         </template>
         <h3>{{ affiliation }}</h3>
         <div class="jobs">
@@ -44,18 +47,18 @@
           <div v-if="cardDetails.gender">Gender: {{ cardDetails.gender }}</div>
           <div v-if="cardDetails.hair">Hair: {{ cardDetails.hair }}</div>
           <div v-if="cardDetails.weapon">Weapon: {{ cardDetails.weapon }}</div>
-          <div v-if="cardDetails.first">First: {{ cardDetails.first }}</div>
+          <div v-if="cardDetails.first && cardDetails.first !== FIRST_INVALID_VAL">First: {{ cardDetails.first }}</div>
           <div v-if="cardDetails.affiliation">Affiliation: {{ cardDetails.affiliation }}</div>
           <div v-if="cardDetails.position">Position: {{ cardDetails.position }}</div>
           <div v-if="cardDetails.profession">Profession: {{ cardDetails.profession }}</div>
-          <div class="jobs">
+          <div v-if="cardDetails.allies.length" class="jobs">
             Allies:
             <span v-for="(ally, index) in cardDetails.allies" :key="ally">
               {{ ally }}
               <span v-if="index < allies.length-1">,&nbsp;</span>
             </span>
           </div>
-          <div class="jobs">
+          <div v-if="cardDetails.enemies.length" class="jobs">
             Enemies:
             <span v-for="(enemy, index) in cardDetails.enemies" :key="enemy">
               {{ enemy }}
