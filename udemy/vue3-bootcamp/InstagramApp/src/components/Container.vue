@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router';
 
 <style scoped>
 .container {
-    width: 1000px;
+    /* width: 1000px; */
     max-width: 1000px;
     min-width: 450px;
     margin: 0 auto;
