@@ -1,5 +1,6 @@
 <script setup>
     import Container from './Container.vue';
+    import Image from './Image.vue';
     import { Modal } from 'ant-design-vue';
     import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
     import { ref, defineProps, createVNode } from 'vue';
@@ -18,11 +19,11 @@
     const modalCaption = ref('');
     const selectedPostId = ref(null);
     const canBeDeleted = ref(false);
-    const zoomPost = (e) => {
-        modalImg.value = e.target.src;
-        modalCaption.value = e.target.alt;
-        selectedPostId.value = e.target.dataset.postId;
-        canBeDeleted.value = parseInt(e.target.dataset.postOwnerId) === loggedInUser.value.id;
+    const zoomPost = (post) => {
+        modalImg.value =`${VITE_BASE_PHOTO_URL}${post.imgUrl}`;
+        modalCaption.value = post.caption;
+        selectedPostId.value = post.id;
+        canBeDeleted.value = parseInt(post.owner_id) === loggedInUser.value.id;
         open.value = true;
     }
     const handleCancel = () => {
@@ -66,28 +67,21 @@
             <div
                 v-for="post in posts"
                 :key="post.id"
+                @click="zoomPost(post)"
             >
-                <img
-                    :src="`${VITE_BASE_PHOTO_URL}${post.imgUrl}`"
-                    onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
-                    :data-post-id="post.id"
-                    :data-post-owner-id="post.owner_id"
-                    :alt="post.caption"
-                    @click="zoomPost">
+                <Image :post="post"/>
             </div>
         </div>
     </Container>
-        <div>
-            <a-modal v-model:open="open" width="800px" :title="modalCaption" @cancel="handleCancel" :footer="null">
-                <img class="zoomed"
-                    onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
-                    :src="modalImg"
-                >
-                <div class="zoom-post-buttons" v-if="canBeDeleted">
-                    <AButton type="primary" danger @click="showDeleteConfirm(selectedPostId)">Delete</AButton>
-                </div>
-            </a-modal>
+    <AModal v-model:open="open" :title="modalCaption" @cancel="handleCancel" :footer="null" >
+        <img class="zoomed"
+            onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
+            :src="modalImg"
+        >
+        <div class="zoom-post-buttons" v-if="canBeDeleted">
+            <AButton type="primary" danger @click="showDeleteConfirm(selectedPostId)">Delete</AButton>
         </div>
+    </AModal>
 </template>
 
 <style scoped>
@@ -96,22 +90,19 @@
     display: flex;
     justify-content: left;
     flex-wrap: wrap;
-
-    img {
-        margin: 5px;
-        width: 200px;
-        max-height: 300px;
-        object-fit: cover;
-    }
 }
 
 img.zoomed {
-    width: 100%
+    width: 100%;
 }
 
 .zoom-post-buttons {
     display: flex;
     justify-content: right;
+}
+
+.ant-modal-close {
+    background-color: rgba(255, 255, 255, 0.8) !important;
 }
 
 </style>
