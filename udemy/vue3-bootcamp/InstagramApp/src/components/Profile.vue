@@ -84,6 +84,13 @@
             userInfo.followers--;
         }
     }
+
+    const hanldePostDeletion = (deletedPostId) => {
+        posts.value = posts.value.filter((post) => {
+            return post.id != deletedPostId;
+        });
+        userInfo.posts = posts.value.length;
+    }
 </script>
 
 <template>
@@ -96,7 +103,7 @@
                     :addNewPost="addNewPost"
                     :followUnfollow="followUnfollow"
                 />
-            <ImageGalary :posts="posts"/>
+            <ImageGalary :posts="posts" :hanldePostDeletion="hanldePostDeletion"/>
             </Container>
         </div>
         <div class="profile-container spinner" v-else>

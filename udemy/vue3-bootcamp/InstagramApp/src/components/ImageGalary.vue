@@ -1,21 +1,63 @@
 <script setup>
     import Container from './Container.vue';
-    import { ref, defineProps } from 'vue';
+    import { Modal } from 'ant-design-vue';
+    import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
+    import { ref, defineProps, createVNode } from 'vue';
+    import { supabase } from '@/superbase';
+    import { useUserStore } from '@/stores/users';
+    import { storeToRefs } from 'pinia';
+    
 
-    const props = defineProps(['posts']);
+    const props = defineProps(['posts', 'hanldePostDeletion']);
+    const userStore = useUserStore();
+    const {user: loggedInUser} = storeToRefs(userStore);
 
     const open = ref(false);
     const modalImg = ref('');
     const modalCaption = ref('');
+    const selectedPostId = ref(null);
+    const canBeDeleted = ref(false);
     const zoomPost = (e) => {
         modalImg.value = e.target.src;
         modalCaption.value = e.target.alt;
+        selectedPostId.value = e.target.dataset.postId;
+        canBeDeleted.value = parseInt(e.target.dataset.postOwnerId) === loggedInUser.value.id;
         open.value = true;
     }
     const handleCancel = () => {
         open.value = false;
         modalCaption.value = '';
+        selectedPostId.value = null;
     }
+
+    const showDeleteConfirm = (postId) => {
+        Modal.confirm({
+            title: 'Are you sure delete this post?',
+            icon: createVNode(ExclamationCircleOutlined),
+            content: '',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            async onOk() {
+                console.log(`Deletting post with id ${postId}.`);
+                const response = await supabase
+                    .from('posts')
+                    .delete()
+                    .eq('id', postId)
+                    .eq('owner_id', loggedInUser.value.id);
+
+                if (!response.error) {
+                    props.hanldePostDeletion(postId);
+                    handleCancel();
+
+                    const imageinBucket = modalImg.value.split('/images/')[1];
+                    if (imageinBucket) {
+                        await supabase.storage.from('images').remove([imageinBucket]);
+                    }
+                }
+            }
+        });
+    };
 </script>
 <template>
     <Container>
@@ -27,6 +69,8 @@
                 <img
                     :src="`https://xuayslhplmadovjgvhkv.supabase.co/storage/v1/object/images/${post.imgUrl}`"
                     onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
+                    :data-post-id="post.id"
+                    :data-post-owner-id="post.owner_id"
                     :alt="post.caption"
                     @click="zoomPost">
             </div>
@@ -35,8 +79,12 @@
         <div>
             <a-modal v-model:open="open" width="800px" :title="modalCaption" @cancel="handleCancel" :footer="null">
                 <img class="zoomed"
-                onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
-                :src="modalImg">
+                    onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
+                    :src="modalImg"
+                >
+                <div class="zoom-post-buttons" v-if="canBeDeleted">
+                    <AButton type="primary" danger @click="showDeleteConfirm(selectedPostId)">Delete</AButton>
+                </div>
             </a-modal>
         </div>
 </template>
@@ -57,4 +105,10 @@
 img.zoomed {
     width: 100%
 }
+
+.zoom-post-buttons {
+    display: flex;
+    justify-content: right;
+}
+
 </style>

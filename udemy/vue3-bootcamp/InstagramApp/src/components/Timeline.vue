@@ -1,6 +1,30 @@
 <script setup>
     import Container from './Container.vue';
     import Card from './Card.vue';
+    import { useUserStore } from '@/stores/users';
+    import { storeToRefs } from 'pinia';
+    import { ref, onMounted } from 'vue';
+    import { supabase } from '@/superbase';
+
+    const userStore = useUserStore();
+    const { user: loggedInUser, loadingUser } = storeToRefs(userStore);
+
+    onMounted(async () => {
+        await loadTimeline();
+    });
+
+    const timelinePosts = ref([]);
+    const loadTimeline = async () => {
+        const response = await supabase
+            .from('posts')
+            .select()
+            // .eq()
+            .order('created_at', {ascending: false});
+
+        if (response.data) {
+            timelinePosts.value = response.data;
+        }
+    };
 
     const data = [{
         id: 1,
@@ -44,19 +68,31 @@
 
 <template>
     <Container>
-        <div class="card-container">
-            <Card v-for="post in data" :key="post.id" :post="post" />
-            <Card />
-            <Card />
+        <div v-if="!loadingUser">
+            <div class="timeline-container" v-if="loggedInUser">
+                <Card v-for="post in timelinePosts" :key="post.id" :post="post" />
+            </div>
+
+            <div class="timeline-container" v-else>
+                <h2>Log it to see posts</h2>
+            </div>
+        </div>
+        <div v-else class="spinner">
+            <ASpin size="large"/>
         </div>
     </Container>
 </template>
 
 <style scoped>
-.card-container {
+.spinner,
+.timeline-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px 0px;
+}
+
+.spinner {
+    padding: 100px 0;
 }
 </style>

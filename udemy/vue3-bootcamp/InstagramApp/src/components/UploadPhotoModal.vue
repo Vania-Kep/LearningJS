@@ -48,15 +48,14 @@
         owner_id: user.value.id
       });
 
+      //Load Post ID
+      const addedPostInfo = await supabase.from('posts').select().eq('imgUrl', filePath).single();
+
       loading.value = false;
       open.value = false;
       caption.value = '';
       file.value = null;
-      props.addNewPost({
-        imgUrl: filePath,
-        caption: caption.value,
-        owner_id: user.value.id
-      });
+      props.addNewPost(addedPostInfo.data);
     };
 
     const handleUpploadChange = e => {
