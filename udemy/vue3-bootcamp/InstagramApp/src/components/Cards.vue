@@ -13,7 +13,7 @@
         await loadTimeline();
     });
 
-    let step = 3;
+    let step = 2;
     const lastCardIndex = ref(2);
     const timelinePosts = ref([]);
     const owners_IDs = ref([]);

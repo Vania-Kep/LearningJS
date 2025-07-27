@@ -6,7 +6,8 @@
     import { supabase } from '@/superbase';
     import { useUserStore } from '@/stores/users';
     import { storeToRefs } from 'pinia';
-    
+
+    const {VITE_BASE_PHOTO_URL} = import.meta.env;
 
     const props = defineProps(['posts', 'hanldePostDeletion']);
     const userStore = useUserStore();
@@ -67,7 +68,7 @@
                 :key="post.id"
             >
                 <img
-                    :src="`https://xuayslhplmadovjgvhkv.supabase.co/storage/v1/object/images/${post.imgUrl}`"
+                    :src="`${VITE_BASE_PHOTO_URL}${post.imgUrl}`"
                     onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"
                     :data-post-id="post.id"
                     :data-post-owner-id="post.owner_id"

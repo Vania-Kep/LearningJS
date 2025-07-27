@@ -3,6 +3,8 @@
     import { useRouter } from 'vue-router';
     import { defineProps } from 'vue';
 
+    const {VITE_BASE_PHOTO_URL} = import.meta.env;
+
     const props = defineProps(['post']);
 
     const roter = useRouter();
@@ -18,7 +20,7 @@
       <img
         @click="navigateToPostOwner"
         :alt="props.post.caption"
-        :src="`https://xuayslhplmadovjgvhkv.supabase.co/storage/v1/object/images/${post.imgUrl}`"
+        :src="`${VITE_BASE_PHOTO_URL}${post.imgUrl}`"
         onerror="this.src = 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'"/>
     </template>
     <ACardMeta>
