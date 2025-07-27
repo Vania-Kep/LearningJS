@@ -19,7 +19,7 @@
     });
 
     const loadIsFollowingState = async () => {
-        if (!loggedInUser || !loggedInUser.value || loggedInUser.value.id === props.user.id) return;
+        if (!loggedInUser || !loggedInUser.value || !props.user || loggedInUser.value.id === props.user.id) return;
 
         followingStateLoader.value = true;
 

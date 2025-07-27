@@ -99,6 +99,8 @@
     img {
         margin: 5px;
         width: 200px;
+        max-height: 300px;
+        object-fit: cover;
     }
 }
 
