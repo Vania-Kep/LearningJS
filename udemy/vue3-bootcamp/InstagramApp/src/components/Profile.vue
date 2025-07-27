@@ -2,37 +2,106 @@
     import Container from './Container.vue';
     import UserBar from './UserBar.vue';
     import ImageGalary from './ImageGalary.vue';
+    import { supabase } from '@/superbase';
+    import { ref, reactive, onMounted } from 'vue';
+    import { useRoute } from 'vue-router';
 
-    const posts = [{
-        id: 1,
-        username: 'selina',
-        name: 'Selina Gomez',
-        imgUrl: 'https://img.buzzfeed.com/buzzfeed-static/static/2023-09/24/13/asset/b0bd2f4bf746/sub-buzz-4715-1695563853-1.jpg?downsize=700%3A%2A&output-quality=auto&output-format=auto',
-        caption: ''
-    }, {
-        id: 2,
-        username: 'default',
-        name: 'Default',
-        imgUrl: 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
-        caption: 'This is a defaultcaption!'
-    }];
+    const route = useRoute();
+    const {username} = route.params;
+    const user = ref(null);
+    const posts = ref([]);
+    const loading = ref(false)
+    const userInfo = reactive({
+        posts: 0,
+        followers: 0,
+        following: 0
+    });
 
+    const fetchData = async () => {
+        loading.value = true;
+        const {data: userData} = await supabase
+        .from('users')
+        .select()
+        .eq('username', username)
+        .single();
+
+        if (!userData) {
+            loading.value = false;
+            user.value = null;
+            return;
+        }
+
+        user.value = userData;
+
+        const {error, data: userPosts} = await supabase
+            .from('posts')
+            .select()
+            .eq('owner_id', user.value.id)
+            .order('id', {ascending: false});
+
+        if (error) {
+            loading.value = false;
+            return;
+        }
+
+        posts.value = userPosts;
+        userInfo.posts = posts.value.length;
+        loading.value = false;
+        fetchFollowersFollowingData();
+    };
+
+    const fetchFollowersFollowingData = async () => {
+        const {count: countFollowings} = await supabase
+            .from('followers_following')
+            .select('*', {count: 'exact'})
+            .eq('follower_id', user.value.id)
+            .order('created_at', {ascending: false});
+
+        userInfo.following = countFollowings;
+
+        const {count: countFollowers} = await supabase
+            .from('followers_following')
+            .select('*', {count: 'exact'})
+            .eq('following_id', user.value.id)
+            .order('created_at', {ascending: false});
+
+        userInfo.followers = countFollowers;
+
+    }
+
+    onMounted(async () => {
+        fetchData();
+    });
+
+    const addNewPost = post => {
+        posts.value.unshift(post);
+    };
+
+    const followUnfollow = (folow) => {
+        if (folow) {
+            userInfo.followers++;
+        } else {
+            userInfo.followers--;
+        }
+    }
 </script>
 
 <template>
-    <Container>
-        <div class="profile-container">
-          <UserBar
-            :username="'asd'"
-            :userInfo="{
-                posts: 4,
-                followers: 12,
-                following: 323
-            }"
-          />
-          <ImageGalary :posts="posts"/>
+        <div class="profile-container" v-if="!loading">
+            <Container>
+                <UserBar
+                    :key="$route.params.username"
+                    :user="user"
+                    :userInfo="userInfo"
+                    :addNewPost="addNewPost"
+                    :followUnfollow="followUnfollow"
+                />
+            <ImageGalary :posts="posts"/>
+            </Container>
         </div>
-    </Container>
+        <div class="profile-container spinner" v-else>
+            <ASpin size="large"/>
+        </div>
 </template>
 
 <style scoped>
@@ -42,5 +111,11 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0px;
+    padding-inline: 50px;
+
+    &.spinner {
+        margin: 60px 0;
+        height: 100px;
+    }
 }
 </style>

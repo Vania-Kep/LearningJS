@@ -59,9 +59,9 @@
     <AButton type="primary" @click="showModal" class="btn">{{title}}</AButton>
     <AModal v-model:open="open" :title="title">
         <div v-if="!confirmLoading" class="input-container">
-            <AInput class="auth-input" v-if="!isLogin" v-model:value="userCredentials.username" autofocus placeholder="Username" />
-            <AInput class="auth-input" v-model:value="userCredentials.email" autofocus placeholder="Email" />
-            <AInputPassword class="auth-input" v-model:value="userCredentials.password" placeholder="Password" />
+            <AInput class="auth-input" v-if="!isLogin" v-model:value="userCredentials.username" autofocus placeholder="Username"  @keypress.enter="handleOk" />
+            <AInput class="auth-input" v-model:value="userCredentials.email" autofocus placeholder="Email"  @keypress.enter="handleOk" />
+            <AInputPassword class="auth-input" v-model:value="userCredentials.password" placeholder="Password" @keypress.enter="handleOk" />
         </div>
         <div v-else class="spinner">
             <ASpin />

@@ -4,7 +4,7 @@
 </script>
 
 <template>
-      <Profile />
+      <Profile :key="$route.params.username"/>
 </template>
 
 <style scoped>

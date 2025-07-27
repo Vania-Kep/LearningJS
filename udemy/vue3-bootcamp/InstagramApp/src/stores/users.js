@@ -126,7 +126,7 @@ export const useUserStore = defineStore('users', () => {
 
     console.log('getUser response', response);
 
-    if (!response.user) {
+    if (!response.data.user) {
       loadingUser.value = false;
       return user.value = null;
     }

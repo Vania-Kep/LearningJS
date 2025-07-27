@@ -19,6 +19,12 @@ const onSearch = () => {
 const handleLogout = async () => {
     await userStore.handleLogout();
 };
+
+const navigateToProfile = () => {
+    if (userStore.user) {
+        roter.push(`/profile/${userStore.user.username}`);
+    }
+};
 </script>
 
 <template>
@@ -41,7 +47,7 @@ const handleLogout = async () => {
                             <AuthModal :isLogin="true"/>
                         </div>
                         <div class="left-content" v-else>
-                            <AButton type="primary">Profile</AButton>
+                            <AButton type="primary" @click="navigateToProfile">Profile</AButton>
                             <AButton type="primary" @click="handleLogout">Logout</AButton>
                         </div>
                     </div>
