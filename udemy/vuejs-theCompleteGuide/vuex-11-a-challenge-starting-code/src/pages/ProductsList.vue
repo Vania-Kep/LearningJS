@@ -1,4 +1,4 @@
-<template>{{ products }}
+<template>
   <section>
     <ul>
       <product-item
@@ -21,11 +21,6 @@ export default {
   inject: ['products'],
   components: {
     ProductItem,
-  },
-  computed: {
-    // products() {
-    //   return this.$store.state.products;
-    // }
   }
 };
 </script>
