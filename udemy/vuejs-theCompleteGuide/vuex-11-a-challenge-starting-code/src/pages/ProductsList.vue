@@ -18,14 +18,14 @@
 import ProductItem from '../components/products/ProductItem.vue';
 
 export default {
-  // inject: ['products'],
+  inject: ['products'],
   components: {
     ProductItem,
   },
   computed: {
-    products() {
-      return this.$store.state.products;
-    }
+    // products() {
+    //   return this.$store.state.products;
+    // }
   }
 };
 </script>
