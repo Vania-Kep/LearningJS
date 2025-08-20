@@ -16,6 +16,11 @@ export default {
         },
         totalDisplayValue(state) {
             return state.total.toFixed(2)
+        },
+        getItemTotal: (state) => (pid) => {
+            const item = state.items.find(itm => itm.productId === pid);
+
+            return (item ? item.qty * item.price : 0).toFixed(2)
         }
     },
     mutatuins: {},
