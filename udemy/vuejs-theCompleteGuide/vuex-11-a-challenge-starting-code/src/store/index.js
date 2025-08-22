@@ -13,13 +13,20 @@ const store = createStore({
             isLoggedIn: false
         };
     },
-    mutations: {},
+    mutations: {
+        login(state) {
+            state.isLoggedIn = true;
+        },
+        logout(state) {
+            state.isLoggedIn = false;
+        }
+    },
     actions: {
         login(context) {
-            context.state.isLoggedIn = true;
+            context.commit('login');
         },
         logout(context) {
-            context.state.isLoggedIn = false;
+            context.commit('logout');
         }
     },
     getters: {
