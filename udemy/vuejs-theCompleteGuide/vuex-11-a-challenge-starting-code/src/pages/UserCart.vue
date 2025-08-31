@@ -2,17 +2,17 @@
   <section>
     <h2>Your Cart</h2>
     <h3>Total Amount: <base-badge mode="elegant">${{ cartTotal }}</base-badge></h3>
-    <ul>
-      <cart-item
-        v-for="item in cart.items"
-        :key="item.productId"
-        :prod-id="item.productId"
-        :title="item.title"
-        :image="item.image"
-        :price="item.price"
-        :qty="item.qty"
-      ></cart-item>
-    </ul>
+    <TransitionGroup tag="ul" name="cart-item">
+        <cart-item
+          v-for="item in cart.items"
+          :key="item.productId"
+          :prod-id="item.productId"
+          :title="item.title"
+          :image="item.image"
+          :price="item.price"
+          :qty="item.qty"
+        ></cart-item>
+    </TransitionGroup>
   </section>
 </template>
 
@@ -55,5 +55,23 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.cart-item-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cart-item-move,
+.cart-item-leave-active {
+  transition: all 4s ease;
+}
+.cart-item-leave-to {
+  opacity: 0;
+  transform: translateX(300px);
+}
+
+
+.cart-item-leave-active {
+  position: absolute;
 }
 </style>
