@@ -1,0 +1,1 @@
+- [ ] The v-model directive auto focuses whatever element it's placed on

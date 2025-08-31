@@ -1,0 +1,3 @@
+- When a movie is updated, only it updates and all others do not update.
+- When a movie rating is updated, it works as expected.
+- When a movie is removed, it works as expected.
