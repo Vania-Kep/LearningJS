@@ -71,6 +71,9 @@ body {
   table-layout: fixed;
   border-spacing: 1rem;
   text-align: right;
+
+  justify-content: center;
+  display: flex;
 }
 
 #result thead {
@@ -86,4 +89,30 @@ body {
 
 .center {
   text-align: center;
+}
+
+.input-group {
+  padding: 5px 0px;
+}
+
+#result th, #result td {
+  padding: 0.5rem;
+}
+
+.error-text {
+  color: #ff6b6b;
+  font-weight: bold;
+  padding: 0rem;
+  margin: 0rem;
+  font-size: 0.65rem;
+  visibility: hidden;
+  min-height: 0.88rem;
+  /* height: 0; Or a fixed height */
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+
+  &.show {
+    visibility: visible;
+    /* height: auto; */
+  }
 }
